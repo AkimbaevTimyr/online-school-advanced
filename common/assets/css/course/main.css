@@ -1,0 +1,233 @@
+body{
+    font-family: 'GraphikLCG-Regular', sans-serif !important;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover{
+    color: black;
+    text-underline: none;
+}
+
+.main-page{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-page-wrapper{
+    width: 1280px;
+}
+
+
+/*banner*/
+
+.main-page-banner-section{
+
+}
+
+.banner{
+    display: flex;
+    justify-content: space-between;
+    background-image: radial-gradient(rgba(44,91,239,1) 0%, rgba(13,48,204,1) 100%);
+    padding: 40px 40px 0px 40px;
+    border-radius: 20px;
+    margin-bottom: 50px;
+    align-items: center;
+}
+
+.banner-title{
+    color: white;
+    font-size: 60px;
+    font-weight: 600;
+}
+
+.banner-img{
+    max-width: 600px;
+    max-height: 450px;
+}
+
+.banner-img img{
+    width: 600px;
+    height: 450px;
+}
+
+
+/*reasons*/
+
+.main-page-reasons-section{
+
+}
+
+.reasons{
+    display: flex;
+    padding: 40px;
+}
+
+.reasons-title{
+    font-size: 40px;
+    font-weight: 600;
+}
+
+.reasons-list{
+    margin-left: 100px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.reasons-list-item{
+    width: 200px;
+    font-size: 18px;
+    font-width: 400;
+    color: #000000;
+    margin-right: 50px;
+    margin-bottom: 40px;
+}
+
+
+/*professions*/
+
+.main-page-professions{
+    padding: 40px;
+}
+
+.professions{
+    background-color: rgb(36,36,36);
+    border-radius: 20px;
+    padding: 40px 50px;
+    margin-bottom: 40px;
+}
+
+.professions-header{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.professions-header-img{
+
+}
+
+.professions-header-title{
+    font-size: 32px;
+    font-width: 600;
+    margin-bottom: 20px;
+}
+
+.professions-header-desc{
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.professions-content{
+
+}
+
+.professions-list{
+    display: flex;
+    justify-content: space-between;
+}
+
+.professions-list-item{
+    display: flex;
+    justify-content: space-between;
+    min-width: 360px;
+    height: 174px;
+    background-color: rgb(96,179,255);
+    border-radius: 10px;
+    padding: 20px;
+    color: black;
+    align-items: center;
+}
+
+.professions-list-item-rubrics{
+    font-size: 12px;
+    font-weight: 400;
+    color: black;
+}
+
+.professions-list-item-title{
+    font-size: 20px;
+    font-weight: 300;
+    margin: 10px 0px;
+    text-decoration: none;
+    color: black;
+    width: 30px;
+}
+
+.professions-list-item-time{
+    font-size: 12px;
+    font-weight: 400;
+    color: black;
+}
+
+.professions-list-item-img{
+    max-width: 90px;
+    max-height: 90px;
+}
+
+.professions-list-item-img img{
+    width: 90px;
+    height: 90px;
+}
+
+
+/*
+experience*/
+
+.main-page-experience{
+    padding: 40px;
+}
+
+.experience {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.experience-title{
+    font-size: 52px;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.experience-description{
+    display: flex;
+    text-align: center;
+    max-width: 560px;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 100px;
+    font-size: 19px;
+    font-weight: 400;
+}
+
+.experience-list{
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    align-items: center;
+    min-width: 800px;
+}
+
+.experience-list-item{
+    display: flex;
+    align-items: center;
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.experience-list-item img{
+    max-width: 150px;
+    max-height: 150px;
+}
+
+
+
