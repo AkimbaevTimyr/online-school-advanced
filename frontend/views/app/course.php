@@ -9,7 +9,6 @@ use yii\helpers\Url;
     <div class="d-flex h-100">
         <div class="course">
                 <h1><?= $course->name ?> Курс</h1>
-
                 <?php $this->beginBlock('visits'); ?>
                     <div class="course-statistics">
                         <?php

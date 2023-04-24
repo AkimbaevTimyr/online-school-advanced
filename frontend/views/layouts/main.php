@@ -25,10 +25,17 @@ FrontendAsset::register($this);
     <body >
 <?php $this->beginBody() ?>
 
+
+
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= $content ?>
+
+
+        <footer id="footer" class="mt-auto ">
+            <?php echo $this->render('/widgets/footer') ?>
+        </footer>
 
 <?php $this->endBody() ?>
 </body>

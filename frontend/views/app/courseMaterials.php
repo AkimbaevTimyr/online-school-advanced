@@ -27,15 +27,8 @@ use yii\helpers\Html;
                 </div>
             </nav>
         </div>
-
         <div class="main-body" style="background-color: rgb(243, 243, 244);">
-            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0; height: 60px">
-                <div class="navbar-header">
-                </div>
-                <ul class="nav navbar-top-links navbar-right ">
-                    <div style="margin-right: 30px; font-size:20px; display: flex; margin-right: 30px; color: rgba(0, 0, 0, 0.55); align-items: center; cursor: pointer" onclick="exitFunction()">Выйти</div>
-                </ul>
-            </nav>
+            <?php echo $this->render('/widgets/userCabineteNav') ?>
             <div>
                 <div class="row p-w-xl">
                     <div class="col-lg-3">

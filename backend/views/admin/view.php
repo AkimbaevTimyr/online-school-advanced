@@ -5,7 +5,7 @@ use yii\bootstrap5\Html;
 ?>
 
 <p>
-    <?= Html::a('Edit', ['update', 'id' => $model->id], [
+    <?= Html::a('Edit', ['event-update', 'id' => $model->id], [
         'id' => 'edit-link',
         'onClick' =>"$('#view').find('.modal-body').load($(this).attr('href')); return false;",
         'class' => 'btn btn-primary'

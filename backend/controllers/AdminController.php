@@ -3,12 +3,14 @@
 namespace backend\controllers;
 
 
+use backend\models\Roles;
 use common\models\Courses;
 use common\models\CourseSectionMaterials;
 use common\models\CourseSections;
 use common\models\Events;
 use common\models\Files;
 use common\models\MaterialsLinks;
+use common\models\SignupForm;
 use common\models\StartScreen;
 use common\models\User;
 use DateTime;
@@ -83,8 +85,10 @@ class AdminController extends Controller
 
     public function actionCreateUser()
     {
+
+        $roles = Roles::find()->all();
         $courses = Courses::find()->all();
-        $model = new User();
+        $model = new SignupForm();
         $request = Yii::$app->request->post();
 
         if($model->load($request) && $model->validate() && $model->save()){
@@ -93,7 +97,8 @@ class AdminController extends Controller
 
         return $this->render('createUser',[
             'courses' => $courses,
-            'model' => $model
+            'model' => $model,
+            'roles' => $roles
         ]);
     }
 
@@ -277,19 +282,33 @@ class AdminController extends Controller
         $this->redirect(Yii::$app->request->referrer);
     }
 
-    public function actionEventUpdate($id)
+    public function actionEventUpdate($id = null)
     {
-        $model = Events::findOne($id);
+        $eventId = Yii::$app->request->post('eventId');
+        $start = Yii::$app->request->post('start');
+        $end = Yii::$app->request->post('end');
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $this->redirect(Yii::$app->request->referrer);
-        } else {
-            return $this->renderAjax('/admin/event', [
-                'model' => $model,
-            ]);
+        if(!empty($eventId)){
+            $event = Events::findOne($eventId);
+            $event->created_date = $start;
+            $event->created_date_end = $end;
+            if (!$event->save()) {
+                throw new ServerErrorHttpException('Failed to update the event.');
+            }
+        }
+
+        if(!empty($id)){
+            $model = Events::findOne($id);
+
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                $this->redirect(Yii::$app->request->referrer);
+            } else {
+                return $this->renderAjax('/admin/event', [
+                    'model' => $model,
+                ]);
+            }
         }
     }
-
 
     // удаление курса из базы данных
     public function actionDeleteCourse($id)
@@ -334,6 +353,7 @@ class AdminController extends Controller
         ]);
     }
 
+    //добавить id для редиректа при добавлении ссылки у материала курса
     public function actionUpdateLink($link, $id)
     {
         $materialsLink = new MaterialsLinks();
@@ -342,5 +362,16 @@ class AdminController extends Controller
         $materialsLink->course_materials_id = $id;
         $materialsLink->save();
         return $this->redirect("/admin/course-materials/18283");
+    }
+
+    public function actionSignup()
+    {
+        $userRole = Yii::$app->request->post('select-name');
+
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post()) && $model->signup($userRole)) {
+            Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
+        }
+        return $this->redirect('/admin/create-user');
     }
 }

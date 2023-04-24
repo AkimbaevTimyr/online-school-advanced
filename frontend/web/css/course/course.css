@@ -11,7 +11,6 @@ html, body {
     height: 100%;
 }
 
-
 .navigation{
     width: 1280px;
     display: flex;
@@ -776,7 +775,6 @@ footer
     background-color: rgb(36,36,36);
     width: 100%;
     color: white;
-    margin-top: 600px;
 }
 
 .bottom{

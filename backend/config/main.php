@@ -43,6 +43,7 @@ return [
             'rules' => [
                 'admin/course-page/<id:\d+>' => 'admin/course-page/',
                 'admin/course-materials/<id:\d+>' => 'admin/course-materials/',
+                '/' => 'user/login'
             ],
         ],
     ],

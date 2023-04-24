@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\models;
+namespace common\models;
 
 use Yii;
 use yii\base\Model;
@@ -43,7 +43,7 @@ class SignupForm extends Model
      *
      * @return bool whether the creating new account was successful and email was sent
      */
-    public function signup()
+    public function signup($role)
     {
         if (!$this->validate()) {
             return null;
@@ -62,7 +62,7 @@ class SignupForm extends Model
         }
 
         $auth = Yii::$app->authManager;
-        $userRole = $auth->getRole('user');
+        $userRole = $auth->getRole($role);
         $auth->assign($userRole, $user->id);
 
         return $this->sendEmail($user);

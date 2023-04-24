@@ -1,5 +1,4 @@
-
-
+<br>
 <nav class="navigation">
     <div class="nav-logo">Delta Education</div>
     <div class="navigation-wrapper">

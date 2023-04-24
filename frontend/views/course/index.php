@@ -288,7 +288,6 @@
                                         <?php echo $course->name; ?>
                                     </p>
                                     <div class="plus alt-plus">
-
                                     </div>
                                 </div>
                                 <div class="course-program-block-details-item-content">
@@ -307,7 +306,7 @@
             </section>
         </div>
         <section class="course-price" style="background-color: <?= $courseInformation->background_color ?>;" name="course-price-section">
-        <div class="price profession-container" >
+            <div class="price profession-container" >
             <div class="price-info">
                 <div class="price-info-header">
                     <h2>Стоимость обучения</h2>
@@ -357,8 +356,8 @@
                 </form>
             </div>
         </div>
-    </section>
-        <div class="content">
+        </section>
+        <div class="content" style="margin-bottom: 300px">
             <section class="course-experts-section profession-container">
                 <div class="course-experts">
                     <h2 class="course-experts-title">Эксперты</h2>
@@ -400,50 +399,6 @@
                 </div>
             </section>
         </div>
-        <section class="bottom-section profession-container">
-            <div class="bottom">
-                <div class="bottom-top-mainInfo">
-                    <div class="bottom-contacts">
-                        <div class="bottom-contacts-phone">
-                            +7 771 302 02 20
-                        </div>
-                        <div class="bottom-contacts-contactCenter">
-                            Контактный центр
-                        </div>
-                        <div class="bottom-contacts-email">
-                            hello@skillbox.kz
-                        </div>
-                        <div class="bottom-contacts-socials">
-                            <a href="#">
-                                <img src="https://skillbox.kz/assets/img/socials/facebook.svg">
-                            </a>
-                            <a href="#">
-                                <img src="https://skillbox.kz/assets/img/socials/facebook.svg">
-                            </a>
-                            <a href="#">
-                                <img src="https://skillbox.kz/assets/img/socials/facebook.svg">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="bottom-info">
-                    <div class="bottom-info-topItem">
-                        <a href="#">Публичный договор</a>
-                    </div>
-                    <div class="bottom-info-topItem">
-                        <a href="#">Политика конфиденциальности</a>
-                    </div>
-                </div>
-                <div class="bottom-legal">
-                    <div class="bottom-legal-topItem">
-                        Delta Education
-                    </div>
-                    <div class="bottom-legal-topItem">
-                        Республика Казахстан,  город Семей, улица Гагарина 32
-                    </div>
-                </div>
-            </div>
-        </section>
 </div>
 
 

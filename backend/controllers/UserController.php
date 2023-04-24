@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\LoginForm;
+use common\models\SignupForm;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -70,6 +71,8 @@ class UserController extends Controller
      *
      * @return string|Response
      */
+
+
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
@@ -80,7 +83,13 @@ class UserController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->redirect('/admin/main');
+            if (Yii::$app->user->can("admin")) {
+                return $this->redirect('/admin/main');
+            } else {
+                Yii::$app->user->logout();
+                Yii::$app->getSession()->setFlash('error', 'Access denied');
+                return $this->redirect(['/user/login']);
+            }
         }
 
         $model->password = '';
@@ -101,4 +110,15 @@ class UserController extends Controller
 
         return $this->redirect("/user/login");
     }
+
+    /*public function actionSignup()
+    {
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+            Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        return $this->render('/admin/create-user');
+    }*/
+
 }

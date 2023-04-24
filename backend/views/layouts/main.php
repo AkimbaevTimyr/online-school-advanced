@@ -3,14 +3,15 @@
 /** @var \yii\web\View $this */
 /** @var string $content */
 
-use common\assets\AppAsset;
 use common\widgets\Alert;
+use frontend\assets\FrontendAsset;
 use kartik\icons\FontAwesomeAsset;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 
+\common\assets\AppAsset::register($this);
 FontAwesomeAsset::register($this);
-AppAsset::register($this);
+FrontendAsset::register($this);
 Yii::$app->params['bsVersion'];
 ?>
 <?php $this->beginPage() ?>
@@ -26,10 +27,20 @@ Yii::$app->params['bsVersion'];
 <body >
 <?php $this->beginBody() ?>
 
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= $content ?>
+        <div class="d-flex">
+            <div>
+                <?php echo $this->render('/widgets/sidebar'); ?>
+            </div>
+            <div class="main-body gray-bg">
+                <?php echo $this->render('/widgets/nav'); ?>
+                <div id="main-body-content" style="margin-left: 30px"">
+                    <?= Breadcrumbs::widget([
+                        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                    ]) ?>
+                    <?= $content ?>
+                </div>
+            </div>
+        </div>
 
 <?php $this->endBody() ?>
 </body>

@@ -1,7 +1,5 @@
-
-<br>
 <div class="main-page">
-    <?php echo $this->render('/widgets/navigation.php'); ?>
+    <?php echo $this->render('/widgets/navigation'); ?>
     <section class="main-page-banner-section main-page-wrapper">
         <div class="banner">
             <div>
@@ -85,7 +83,7 @@
             </div>
         </div>
     </section>
-    <section class="main-page-experience main-page-wrapper">
+    <section class="main-page-experience main-page-wrapper"  >
         <div class="experience">
             <h2 class="experience-title">
             <h2 class="experience-title">

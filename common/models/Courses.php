@@ -2,20 +2,55 @@
 
 namespace common\models;
 
-use yii\db\ActiveRecord;
+use Yii;
 
-class Courses extends ActiveRecord
+/**
+ * This is the model class for table "courses".
+ *
+ * @property int $id
+ * @property string $name
+ *
+ * @property CourseSections[] $courseSections
+ */
+class Courses extends \yii\db\ActiveRecord
 {
-    public function rules()
-    {
-        return[
-            [['id'], 'required'],
-            [['name'], 'required'],
-        ];
-    }
-
+    /**
+     * {@inheritdoc}
+     */
     public static function tableName()
     {
         return 'courses';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['name'], 'required'],
+            [['name'], 'string', 'max' => 50],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'name' => 'Name',
+        ];
+    }
+
+    /**
+     * Gets query for [[CourseSections]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCourseSections()
+    {
+        return $this->hasMany(CourseSections::class, ['course_id' => 'id']);
     }
 }
