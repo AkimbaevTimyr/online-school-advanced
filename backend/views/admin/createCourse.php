@@ -1,13 +1,14 @@
 <?php
 
 use mihaildev\ckeditor\CKEditor;
-use yii\helpers\Html;
-    use yii\bootstrap5\Nav;
+
+$this->title = "Cоздать курс";
+$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 
 
 <div class="d-flex">
-
     <div class="main-body gray-bg" >
         <div id="main-body-content">
             <div class="gray-bg p-m course-wrapper">
@@ -126,15 +127,15 @@ use yii\helpers\Html;
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="mb-3 flex">
-                                                    <label class="form-label" >Прикрепить файл</label>
-                                                    <div class="d-block">
-                                                        <input class="form-control" name="file[]" type="file" id="formFile" style="width: 500px" required>
-                                                        <div class="invalid-feedback">
-                                                            Пожалуйста прикрепите файлы
-                                                        </div>
-                                                    </div>
-                                                </div>
+<!--                                                <div class="mb-3 flex">-->
+<!--                                                    <label class="form-label" >Прикрепить файл</label>-->
+<!--                                                    <div class="d-block">-->
+<!--                                                        <input class="form-control" name="file[]" type="file" id="formFile" style="width: 500px" required>-->
+<!--                                                        <div class="invalid-feedback">-->
+<!--                                                            Пожалуйста прикрепите файлы-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
                                             </div>
                                             <div class="col-sm-offset-4 " >
                                                 <button onclick="onSectionClick()" type="button" class="btn border" style="min-width: 100px">
@@ -186,10 +187,10 @@ use yii\helpers\Html;
                         <input id="courseMaterials-1" name="description[]" type="text" class="form-control" style="width: 500px" required >
                     </div>
                 </div>
-                <div class="mb-3 flex">
-                    <label class="form-label" >Прикрепить файл</label>
-                    <input class="form-control" name="file[]" type="file" id="formFile" style="width: 500px" required>
-                </div>
+<!--                <div class="mb-3 flex">-->
+<!--                    <label class="form-label" >Прикрепить файл</label>-->
+<!--                    <input class="form-control" name="file[]" type="file" id="formFile" style="width: 500px" required>-->
+<!--                </div>-->
             </div>
             <button onclick="onSectionClick()" type="button" class="btn border" style="min-width: 100px">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
@@ -251,10 +252,10 @@ use yii\helpers\Html;
                         <input id="courseMaterials-1" type="text" name="description[]" class="form-control" style="width: 500px" required>
                     </div>
                 </div>
-                   <div class="mb-3 flex">
-                    <label class="form-label" >Прикрепить файл</label>
-                    <input class="form-control" name="file[]" type="file" id="formFile" style="width: 500px" required>
-                </div>
+<!--               <div class="mb-3 flex">-->
+<!--                    <label class="form-label" >Прикрепить файл</label>-->
+<!--                    <input class="form-control" name="file[]" type="file" id="formFile" style="width: 500px" required>-->
+<!--                </div>-->
            </div>
     `);
     }
@@ -326,10 +327,7 @@ use yii\helpers\Html;
                 about_profession : professionDescription,
             }
 
-            console.log( courseTime)
-            console.log( courseDescription)
-            console.log( professionDescription)
-            console.log( courseImg)
+
 
             let courseSectionsId;
 

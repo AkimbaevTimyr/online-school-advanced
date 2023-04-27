@@ -26,11 +26,16 @@ class MyRbacController extends Controller
         $viewUserPage = $auth->createPermission('viewUserPage');
         $viewUserPage->description = 'Просмотр Страницы пользователя';
 
+        $viewTeacherPage = $auth->createPermission('viewTeacherPage');
+        $viewTeacherPage->description = 'Просмотр кабинета учителя';
+
         $auth->add($viewAdminPage);
         $auth->add($viewUserPage);
+        $auth->add($viewTeacherPage);
 
         $auth->addChild($admin, $viewAdminPage);
         $auth->addChild($user, $viewUserPage);
+        $auth->addChild($teacher, $viewTeacherPage);
 
         $auth->assign($admin, 1);
         $auth->assign($teacher, 2);

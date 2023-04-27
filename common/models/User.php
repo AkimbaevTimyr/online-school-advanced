@@ -217,4 +217,10 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->hasOne(AuthAssignment::class, ['user_id' => 'id']);
     }
+
+    public function convertDate(){
+        $this->created_at = date('d.m.Y', $this->created_at);
+        $this->updated_at = date('d.m.Y', $this->updated_at);
+    }
+
 }

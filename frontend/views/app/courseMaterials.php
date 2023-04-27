@@ -31,22 +31,28 @@ use yii\helpers\Html;
             <?php echo $this->render('/widgets/userCabineteNav') ?>
             <div>
                 <div class="row p-w-xl">
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
                         <a href="/app/main">Назад</a><br/>
                         <div class="ibox">
-                            <div class="ibox-title">
+                            <div class="ibox-content">
                                 <h5><?php echo $courseMaterial->name ?></h5>
                             </div>
                             <div class="ibox-content">
                                 <?php echo $courseMaterial->description ?>
-                                <?php if(!empty($link['link'])): ?>
-                                    <p>
-                                        <a href="<?php echo $link['link'] ?>" target="_blank">Ссылка</a>
-                                    </p>
-                                <?php endif; ?>
+                                <div class="d-flex justify-content-between w-50">
+                                    <?php if(!empty($links)): ?>
+                                        <?php foreach ($links as $link): ?>
+                                            <p>
+                                                <a href="<?php echo $link['link'] ?>" target="_blank" >Ссылка</a>
+                                            </p
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </div>
                             </div>
-                            <div class="ibox-content">
-                                <a class="text-decoration-none" href="/app/download-file?id=<?php echo $courseMaterial->id ?>">скачать материалы</a>
+                            <div class="ibox-content d-flex justify-content-between flex-wrap  pt-3">
+                                <?php foreach ($courseMaterialFile as $file): ?>
+                                    <a class="text-decoration-none" href="/app/download-file?id=<?php echo $file->id; ?>">скачать материалы</a>
+                                <?php endforeach; ?>
                             </div>
                         </div>
                     </div>

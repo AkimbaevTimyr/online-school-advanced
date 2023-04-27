@@ -44,9 +44,6 @@ use yii\bootstrap5\Button;
                     ActiveForm::end();
                     ?>
                 </div>
-                <div class="ibox-content auth-bottom">
-                    Нет аккаунта? <a href="/user/signup">Создать новый аккаунт</a>
-                </div>
             </div>
         </div>
         <hr/>

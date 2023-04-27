@@ -27,7 +27,7 @@ class AppController extends Controller
                     [
                         'actions' => ['main', 'education'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['user'],
                     ],
                     [
                         'actions' => [''],
@@ -35,7 +35,7 @@ class AppController extends Controller
                     ],
                 ],
                 'denyCallback' => function($rule, $action) {
-                    Yii::$app->response->redirect(['user/index']);
+                    Yii::$app->response->redirect(['user/login']);
                 },
             ],
             'verbs' => [
@@ -149,7 +149,7 @@ class AppController extends Controller
 
         $storagePath = Yii::getAlias('@webroot').'/uploads/';
 
-        if (!preg_match('/^[a-z0-9]+\.[a-z0-9]+$/i', $file->file) || !is_file("$storagePath/$file->file")) {
+        if (!is_file("$storagePath/$file->file")) {
             throw new \yii\web\NotFoundHttpException('The file does not exists.');
         }
         return Yii::$app->response->sendFile("$storagePath/$file->file", $file->file);
@@ -160,12 +160,12 @@ class AppController extends Controller
         $courses = Courses::find()->all();
         $courseMaterial = CourseSectionMaterials::findOne($id);
         $courseMaterialFile = Files::find()->where(['course_sections_id' => $id])->all();
-        $link = $courseMaterial->getLink($id);
+        $links = $courseMaterial->getLink($id);
         return $this->render('courseMaterials',[
             'courseMaterial' => $courseMaterial,
             'courseMaterialFile' => $courseMaterialFile,
             'courses' => $courses,
-            'link' => $link,
+            'links' => $links,
         ]);
     }
 }

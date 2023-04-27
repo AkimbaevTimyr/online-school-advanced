@@ -59,15 +59,15 @@
                                    <a href="">Профессия</a>
                                 </p>
                                 <div class="professions-list-item-title">
-                                    <a href="<?= \yii\helpers\Url::to(['/course/index', 'name' => $course->name, 'id' => $course->id]) ?>"><b><?= $course->name ?>-разработчик</b></a>
+                                    <a href="<?= \yii\helpers\Url::to(['/course/course', 'name' => $course->name, 'id' => $course->id]) ?>"><b><?= $course->name ?>-разработчик</b></a>
                                 </div>
                                 <div class="professions-list-item-time">
-                                    <a href="<?php echo \yii\helpers\Url::to(['/course/index', 'id' => $course->id]) ?>"><b>10</b> месяцев</a>
+                                    <a href="<?php echo \yii\helpers\Url::to(['/course/course', 'id' => $course->id]) ?>"><b>10</b> месяцев</a>
                                 </div>
                             </div>
                             <div>
                                 <div class="professions-list-item-img">
-                                    <a href="<?php echo \yii\helpers\Url::to(['/course/index', 'id' => $course->id]) ?>">
+                                    <a href="<?php echo \yii\helpers\Url::to(['/course/course', 'id' => $course->id]) ?>">
                                         <img src="https://ms1.skillbox.kz/images/ac31605a3a3962baeb659495660ad874/thumb/w=88,h=88,q=80/course_logo/ae/59/27/ae5927027c42aead3016b68e21466c24.png">
                                     </a>
                                 </div>
@@ -78,7 +78,7 @@
             </div>
             <div class="profession-button">
                 <div>
-                    <a href="#" class="white">Смотреть всё</a>
+                    <a href="/courses" class="white">Смотреть всё</a>
                 </div>
             </div>
         </div>
@@ -116,6 +116,9 @@
         </div>
     </section>
 </div>
+<footer id="footer" class="mt-auto">
+    <?php echo $this->render('/widgets/footer') ?>
+</footer>
 
 
 <script type="text/javascript">

@@ -2,9 +2,12 @@
 
 namespace common\models;
 
+use backend\models\Student;
+
+use common\components\MultiTableDbManager;
 use Yii;
 use yii\base\Model;
-use common\models\User;
+use yii\helpers\VarDumper;
 
 /**
  * Signup form
@@ -14,6 +17,10 @@ class SignupForm extends Model
     public $username;
     public $email;
     public $password;
+    public $name;
+    public $last_name;
+    public $phone_number;
+
 
 
     /**
@@ -24,17 +31,22 @@ class SignupForm extends Model
         return [
             ['username', 'trim'],
             ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
+            ['username', 'unique', 'targetClass' => '\backend\models\Student', 'message' => 'This username has already been taken.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'trim'],
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => '\backend\models\Student', 'message' => 'This email address has already been taken.'],
 
             ['password', 'required'],
             ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
+
+
+            ['name', 'required'],
+            ['last_name', 'required'],
+            ['phone_number', 'required'],
         ];
     }
 
@@ -45,25 +57,26 @@ class SignupForm extends Model
      */
     public function signup($role)
     {
-        if (!$this->validate()) {
-            return null;
-        }
-
+        $userId = rand(1, 100000);
         $user = new User();
+        $user->id = $userId;
         $user->username = $this->username;
         $user->email = $this->email;
+        $user->name = $this->name;
+        $user->last_name = $this->last_name;
+        $user->phone_number = $this->phone_number;
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
         $user->status = 10;
 
-        if (!$user->save()) {
+        if (!$user->save(false)) {
             return null;
         }
 
         $auth = Yii::$app->authManager;
         $userRole = $auth->getRole($role);
-        $auth->assign($userRole, $user->id);
+        $auth->assign($userRole, $userId);
 
         return $this->sendEmail($user);
     }

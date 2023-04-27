@@ -361,7 +361,25 @@ class AdminController extends Controller
 
         $materialsLink->course_materials_id = $id;
         $materialsLink->save();
-        return $this->redirect("/admin/course-materials/18283");
+        return $this->redirect("/admin/course-materials/{$id}");
+    }
+
+
+    public function actionUploadFile($id){
+
+        if($_FILES){
+            $fileName = str_replace(' ', '', $_FILES['file']['name']);
+            $tmp_name = $_FILES["file"]["tmp_name"];
+            move_uploaded_file($tmp_name, Yii::getAlias('@frontend/web/uploads/').$fileName);
+
+            $modelFile = new Files();
+            $modelFile->file = $fileName;
+            $modelFile->course_sections_id = $id;
+            $modelFile->save();
+            echo "Файлы загружены";
+
+            return $this->redirect("/admin/course-materials/{$id}");
+        }
     }
 
     public function actionSignup()

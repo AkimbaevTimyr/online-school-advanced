@@ -14,6 +14,9 @@ FontAwesomeAsset::register($this);
 FrontendAsset::register($this);
 Yii::$app->params['bsVersion'];
 ?>
+
+
+
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>" class="h-100">
@@ -35,6 +38,11 @@ Yii::$app->params['bsVersion'];
                 <?php echo $this->render('/widgets/nav'); ?>
                 <div id="main-body-content" style="margin-left: 30px"">
                     <?= Breadcrumbs::widget([
+                        'homeLink' => [
+                            'label' => 'Главная',
+                            'url' => Yii::$app->homeUrl,
+                        ],
+                        'options' => ['class' => 'w-75'],
                         'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                     ]) ?>
                     <?= $content ?>

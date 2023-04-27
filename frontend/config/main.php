@@ -42,8 +42,9 @@ return [
             'rules' => [
                 'user/login' => "user/login",
                 'app/course-materials/<id:\d+>' => 'app/course-materials',
-                'course/<name:\w+>/<id:\d+>' => 'course/index',
+                'course/<name:\w+>/<id:\d+>' => 'course/course',
                 '/' => 'course/main',
+                'courses' => 'course/courses'
             ],
         ],
     ],

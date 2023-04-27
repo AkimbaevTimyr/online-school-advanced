@@ -1,13 +1,16 @@
 <?php
-use yii\helpers\Html;
+
+$this->title = $courseMaterial->name;
+$this->params['breadcrumbs'][] = ['label' => 'Список Курсов', 'url' => ['course-list']];
+$this->params['breadcrumbs'][] = $this->title;
 
 ?>
 
 <div>
-    <div class="row p-w-xl">
-        <div class="col-lg-3">
+    <div class="row ">
+        <div class="col-lg-6">
             <div class="ibox">
-                <div class="ibox-title">
+                <div class="ibox-content">
                     <h5><?php echo $courseMaterial->name ?></h5>
                 </div>
                 <div class="ibox-content">
@@ -15,9 +18,16 @@ use yii\helpers\Html;
                         <?php echo $courseMaterial->description ?>
                     </p>
                 </div>
-                <form onsubmit="handleSubmit(event)">
+                <form onsubmit="uploadLink(event)">
                     <div class="ibox-content d-flex">
                         <input class="form-control" id="link" placeholder="Ссылка на внешний источник" >
+                        <button class="btn btn-primary" style="width: 100px; margin-left: 15px">Загрузить</button>
+                    </div>
+                </form>
+                <form onsubmit="uploadFile(event)">
+                    <div class="ibox-content d-flex">
+                        <input class="form-control" id="file"  name='materials-file' placeholder="Файл" type="file"
+                               accept=".pdf, .docx, .mp4">
                         <button class="btn btn-primary" style="width: 100px; margin-left: 15px">Загрузить</button>
                     </div>
                 </form>
@@ -28,10 +38,30 @@ use yii\helpers\Html;
 
 <script type="text/javascript">
 
-    function handleSubmit(e){
+    function uploadFile(e){
+        e.preventDefault();
+        let formData = new FormData();
+        let file = document.querySelector('input[name="materials-file"]').files[0];
+        formData.append('file', file);
+        $.ajax({
+            url: "/admin/upload-file?id=" + <?php echo $courseMaterial->id ?>,
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success : function(){
+
+            },
+            error : function () {
+
+            },
+        })
+    }
+
+    function uploadLink(e){
         e.preventDefault();
         let link = $('#link').val();
-        console.log(link)
         $.ajax({
             url: `/admin/update-link?link=`+link+"&"+"id=<?php echo $courseMaterial->id ?>",
             type: "POST",
@@ -86,5 +116,6 @@ use yii\helpers\Html;
             }
         }
     }
+
 </script>
 

@@ -2,72 +2,144 @@
 
 namespace backend\controllers;
 
-use backend\models\Attendance;
-use backend\models\Lesson;
 use backend\models\Student;
 use Yii;
-use yii\base\Controller;
+use yii\data\ActiveDataProvider;
+use yii\db\Query;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+/**
+ * StudentController implements the CRUD actions for Student model.
+ */
 class StudentController extends Controller
 {
+    /**
+     * @inheritDoc
+     */
     public function behaviors()
     {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
+        return array_merge(
+            parent::behaviors(),
+            [
+                'verbs' => [
+                    'class' => VerbFilter::className(),
+                    'actions' => [
+                        'delete' => ['POST'],
+                    ],
                 ],
-            ],
-        ];
+            ]
+        );
     }
 
+    /**
+     * Lists all Student models.
+     *
+     * @return string
+     */
     public function actionIndex()
     {
-        $students = Student::find()->all();
+        $query = (new Query())
+            ->select('user.id, user.username, user.name, user.last_name, user.email, user.phone_number, user.status, user.created_at, user.updated_at, auth_assignment.item_name')
+            ->from('user')
+            ->join('JOIN', 'auth_assignment', 'user.id = auth_assignment.user_id')
+            ->where(['auth_assignment.item_name' => 'user']);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 10
+            ],
+        ]);
 
         return $this->render('index', [
-            'students' => $students,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
-    public function actionAttendance($student_id = 1)
+    /**
+     * Displays a single Student model.
+     * @param int $id ID
+     * @return string
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionView($id)
     {
-        $student = Student::findOne($student_id);
-        $lessons = Lesson::find()->all();
-        $attendance = Attendance::find()->where(['student_id' => $student_id])->indexBy('lesson_id')->all();
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
 
-        if (Yii::$app->request->isPost) {
+    /**
+     * Creates a new Student model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return string|\yii\web\Response
+     */
+    public function actionCreate()
+    {
+        $model = new Student();
 
-            $post = Yii::$app->request->post();
-
-            foreach ($post as $key => $value) {
-                if (strpos($key, 'present_') !== false) {
-                    $lesson_id = str_replace('present_', '', $key);
-                    $attendance[$lesson_id]->present = $value;
-                }
-                if (strpos($key, 'grade_') !== false) {
-                    $lesson_id = str_replace('grade_', '', $key);
-                    $attendance[$lesson_id]->grade = $value;
-                }
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
             }
-
-            foreach ($attendance as $lesson_id => $attendance_item) {
-                if ($attendance_item->validate()) {
-                    $attendance_item->save(false);
-                }
-            }
-
-            Yii::$app->session->setFlash('success', 'Посещение и оценки сохранены');
+        } else {
+            $model->loadDefaultValues();
         }
 
-        return $this->render('attendance', [
-            'student' => $student,
-            'lessons' => $lessons,
-            'attendance' => $attendance,
+        return $this->render('create', [
+            'model' => $model,
         ]);
     }
 
+    /**
+     * Updates an existing Student model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param int $id ID
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Deletes an existing Student model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param int $id ID
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Finds the Student model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param int $id ID
+     * @return Student the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Student::findOne(['id' => $id])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
 }

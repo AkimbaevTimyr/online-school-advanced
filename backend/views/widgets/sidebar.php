@@ -19,7 +19,7 @@ use yii\bootstrap5\Nav;
                     <?= Html::a('Список Курсов', ['admin/course-list'] , ['style' => 'font-size: 16px'])?>
                 </li>
                 <li>
-                    <?= Html::a('Список Студентов', ['students/index'] , ['style' => 'font-size: 16px'])?>
+                    <?= Html::a('Список Студентов', ['student/index'] , ['style' => 'font-size: 16px'])?>
                 </li>
             </ul>
         </div>

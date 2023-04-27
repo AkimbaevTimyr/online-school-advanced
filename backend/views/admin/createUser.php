@@ -10,7 +10,7 @@
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-md-12">
-                            <h2 class="font-bold">Регистрация Студента</h2>
+                            <h2 class="font-bold">Регистрация Аккаунта</h2>
                         </div>
                         <div class="col-md-12">
                             <div class="ibox-content">
@@ -24,7 +24,13 @@
 
                                     <?= $form->field($model, 'email') ?>
 
-                                    <?= $form->field($model, 'password')->passwordInput() ?>
+                                    <?= $form->field($model, 'password')->passwordInput(); ?>
+
+                                    <?= $form->field($model, 'name') ?>
+
+                                    <?= $form->field($model, 'last_name') ?>
+
+                                    <?= $form->field($model, 'phone_number') ?>
 
                                     <?php  $options = ArrayHelper::map($roles, 'parent', 'parent')  ?>
 

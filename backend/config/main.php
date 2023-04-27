@@ -21,6 +21,10 @@ return [
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],
+        'students' => [
+            'class' =>  'common/models/Student',
+            'identityClass' => 'common/models/Student',
+        ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
             'name' => 'advanced-backend',
@@ -43,7 +47,9 @@ return [
             'rules' => [
                 'admin/course-page/<id:\d+>' => 'admin/course-page/',
                 'admin/course-materials/<id:\d+>' => 'admin/course-materials/',
-                '/' => 'user/login'
+                '/' => 'user/login',
+                'student/update/<id:\d+>' => 'student/update/',
+                'student/view/<id:\d+>' => 'student/view/'
             ],
         ],
     ],

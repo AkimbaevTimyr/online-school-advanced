@@ -50,7 +50,7 @@ class CourseSectionMaterials extends \yii\db\ActiveRecord
     }
 
     public function getLink($id) {
-        return MaterialsLinks::findOne(['course_materials_id' => $id]);
+        return MaterialsLinks::findAll(['course_materials_id' => $id]);
     }
 
 }

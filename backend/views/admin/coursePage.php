@@ -2,15 +2,16 @@
 
 use yii\bootstrap5\Modal;
 use yii\bootstrap5\Tabs;
-use yii\helpers\Html;
-use yii\bootstrap5\Nav;
 use yii\helpers\Url;
 
+$this->title = $course->name;
+$this->params['breadcrumbs'][] = ['label' => 'Список Курсов', 'url' => ['course-list']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 
-<div class="course">
-    <div id="main-body-content" style="margin-left: 30px"">
+<div >
+    <div id="main-body-content" >
     <div style="display: flex; align-items: center; max-width: 400px; justify-content: space-between; width: auto">
         <h1><?php echo $course->name ?> Курс</h1>
         <div>

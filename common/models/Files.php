@@ -30,7 +30,7 @@ class Files extends ActiveRecord
     }
 
     public function getFile(int $id){
-        $file = Files::findOne(['course_sections_id' => $id]);
+        $file = Files::findOne(['id' => $id]);
         return $file;
     }
 }

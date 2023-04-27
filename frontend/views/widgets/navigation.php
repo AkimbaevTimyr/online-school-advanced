@@ -8,7 +8,7 @@
                 <a href="#">Помочь с выбором</a>
             </li>
             <li class="navigation-list-item" id="all-course">
-                <a href="#">Все курсы</a>
+                <a href="/courses">Все курсы</a>
             </li>
             <li class="navigation-list-item" id="call">
                 Позвонить
