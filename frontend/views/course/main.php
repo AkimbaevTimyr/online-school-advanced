@@ -14,26 +14,80 @@
             </div>
         </div>
     </section>
-    <section class="main-page-reasons-section main-page-wrapper">
-        <div class="reasons">
-            <div class="reasons-title">
-                Почему выбирают образовательную платформу Skillbox
-            </div>
-            <div class="reasons-list">
-                <div class="reasons-list-item">
-                    Единственная Школа программирования в Семее от практиков.
-                    50% теории, 50% практики - реальные задачи от рынка.
-                </div>
-                <div class="reasons-list-item">
-                    Лучшие учащиеся курса могут получить джоб-оффер на работу в компании-партнере школы в любой момент обучения.
-                </div>
-                <div class="reasons-list-item">
-                    Для обучающихся воссоздаются условия, максимально приближенные к процессам реальной разработки в IT.
-                </div>
-                <div class="reasons-list-item">
-                    В процессе обучения студенты имеют возможность работы с реальными данными .
-                </div>
-            </div>
+<!--    <section class="main-page-reasons-section main-page-wrapper">-->
+<!--        <div class="reasons">-->
+<!--            <div class="reasons-title">-->
+<!--                Почему выбирают Нас-->
+<!--            </div>-->
+<!--            <div class="reasons-list">-->
+<!--                <div class="reasons-list-item">-->
+<!--                    Единственная Школа программирования в Семее от практиков.-->
+<!--                    50% теории, 50% практики - реальные задачи от рынка.-->
+<!--                </div>-->
+<!--                <div class="reasons-list-item">-->
+<!--                    Лучшие учащиеся курса могут получить джоб-оффер на работу в компании-партнере школы в любой момент обучения.-->
+<!--                </div>-->
+<!--                <div class="reasons-list-item">-->
+<!--                    Для обучающихся воссоздаются условия, максимально приближенные к процессам реальной разработки в IT.-->
+<!--                </div>-->
+<!--                <div class="reasons-list-item">-->
+<!--                    В процессе обучения студенты имеют возможность работы с реальными данными .-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+    <section class="main-page-professions main-page-wrapper">
+        <div class="team">
+            <h2 class="team-header">
+                Команда
+            </h2>
+            <ul class="team-composition-list">
+                <li class="team-composition-list-item">
+                    <div class="team-composition-list-item-img">
+                        <img src="/images/teachers/teacher-1.png">
+                    </div>
+                    <h1 class="team-composition-list-item-name">
+                        Khalilov Shamil
+                    </h1>
+                    <div class="team-composition-list-item-description">
+                        Technical Director. A specialist with extensive experience in the field of Web development, data science. Professional skills in server and network administration, working with BIG DATA.
+                        Chairman of the State Attestation Commission of the SHAKARIM UNIVERSITY
+                    </div>
+                </li>
+                <li class="team-composition-list-item">
+                    <div class="team-composition-list-item-img">
+                        <img src="/images/teachers/teacher-2.jpg">
+                    </div>
+                    <div class="team-composition-list-item-name">
+                        Токтаров Бауыржан
+                    </div>
+                    <div class="team-composition-list-item-description">
+                        Team lead, Python-developer. Обширные знания в области мониторинга и парсинга новостных сайтов и социальных сетей. Анализ данных, настройка и применение поисковых движков.
+                    </div>
+                </li>
+                <li class="team-composition-list-item">
+                    <div class="team-composition-list-item-img">
+                        <img src="/images/teachers/teacher-3.jpg">
+                    </div>
+                    <div class="team-composition-list-item-name">
+                        Каримов Ривкат
+                    </div>
+                    <div class="team-composition-list-item-description">
+                        Python-developer, специалист в области парсинга социальных сетей, в частности таких как instagram, telegram, ВКонтакте. Знание django, а так же различных FRONTEND фреймворков.
+                    </div>
+                </li>
+                <li class="team-composition-list-item">
+                    <div class="team-composition-list-item-img">
+                        <img src="/images/teachers/teacher-4.png">
+                    </div>
+                    <div class="team-composition-list-item-name">
+                        Советбеков Мади
+                    </div>
+                    <div class="team-composition-list-item-description">
+                        Специалист в области парсинга социальных сетей, data science. Опытный Python-developer. Обширные знания в работе сетевых протоколов.
+                    </div>
+                </li>
+            </ul>
         </div>
     </section>
     <section class="main-page-professions main-page-wrapper">
@@ -53,22 +107,22 @@
             <div class="professions-content">
                 <div class="professions-list">
                     <?php foreach ($courses  as $course):  ?>
-                        <div class="professions-list-item">
+                        <div class="professions-list-item" style="background-color: <?php echo $course['background_color']; ?> ">
                             <div>
                                 <p class="professions-list-item-rubrics">
                                    <a href="">Профессия</a>
                                 </p>
                                 <div class="professions-list-item-title">
-                                    <a href="<?= \yii\helpers\Url::to(['/course/course', 'name' => $course->name, 'id' => $course->id]) ?>"><b><?= $course->name ?>-разработчик</b></a>
+                                    <a href='<?= \yii\helpers\Url::to(['/course/course', 'name' => $course['name'], 'id' => $course['id']]) ?>'><b><?= $course['name'] ?></b></a>
                                 </div>
                                 <div class="professions-list-item-time">
-                                    <a href="<?php echo \yii\helpers\Url::to(['/course/course', 'id' => $course->id]) ?>"><b>10</b> месяцев</a>
+                                    <a href="<?php echo \yii\helpers\Url::to(['/course/course', 'id' => $course['id']]) ?>"><b><?= $course['course_time'] ?></b> месяцев</a>
                                 </div>
                             </div>
                             <div>
                                 <div class="professions-list-item-img">
-                                    <a href="<?php echo \yii\helpers\Url::to(['/course/course', 'id' => $course->id]) ?>">
-                                        <img src="https://ms1.skillbox.kz/images/ac31605a3a3962baeb659495660ad874/thumb/w=88,h=88,q=80/course_logo/ae/59/27/ae5927027c42aead3016b68e21466c24.png">
+                                    <a href="<?php echo \yii\helpers\Url::to(['/course/course', 'id' => $course['id']]) ?>">
+                                        <img src="/uploads/<?php echo $course['img'] ?>">
                                     </a>
                                 </div>
                             </div>
@@ -116,14 +170,11 @@
         </div>
     </section>
 </div>
-<footer id="footer" class="mt-auto">
-    <?php echo $this->render('/widgets/footer') ?>
-</footer>
 
 
 <script type="text/javascript">
     function redirectToCourse(id) {
-        var url = "<?= \yii\helpers\Url::toRoute(['course/index', 'name' => $course->name, 'id' => '__ID__']) ?>";
+        var url = "<?= \yii\helpers\Url::toRoute(['course/index', 'name' => $course['name'], 'id' => '__ID__']) ?>";
         url = url.replace('__ID__', id);
         window.location.href = url;
     }

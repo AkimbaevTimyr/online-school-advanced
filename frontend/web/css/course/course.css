@@ -18,8 +18,9 @@ html, body {
     align-items: center;
 }
 
-.nav-logo{
-
+.nav-logo img{
+    width: 100px;
+    height: 100px;
 }
 
 .navigation-wrapper{
@@ -44,14 +45,14 @@ li#all-course a {
     background-color: #3d3bff;
     border-radius: 20px;
     color: white;
-    padding: 15px 30px;
+    padding: 10px 35px;
     cursor: pointer;
 }
 
 li#call{
     border: 1px solid black;
     border-radius: 20px;
-    padding: 10px 30px;
+    padding: 7px 35px;
     cursor: pointer;
 }
 
@@ -74,6 +75,18 @@ li#call{
     width: 1280px;
 }
 
+
+.profession-header{
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+}
+
+
+
+
 .start-screen-section{
     margin-bottom: 100px
 }
@@ -87,7 +100,9 @@ li#call{
 }
 
 .start-screen-block div{
-
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 .start-screen-title{
@@ -114,18 +129,23 @@ li#call{
     color: white;
     font-size: 18px;
     cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 .start-screen-button:hover{
+    transform: scale(105%);
     background-color: black;
 }
 
 .start-screen-img{
-    width: 468px;
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .start-screen-img img{
-    max-width: 468px;
+    width: 250px;
 }
 
 /*features*/
@@ -138,7 +158,6 @@ li#call{
 
 .start-screen-features-subtitle{
     font-size: 20px;
-    font-weight: 500;
     line-height: 26px;
 }
 
@@ -156,7 +175,16 @@ about professtion
 .about-profession{
     padding: 0px 46px;
     margin-bottom: 100px;
+    width: 800px;
+    display: flex;
+    justify-content: space-between;
 }
+
+.about-profession-block {
+    width: 700px;
+    margin-right: 100px;
+}
+
 
 .about-profession-title{
     font-size: 52px;
@@ -228,6 +256,8 @@ professtion
     min-width: 164px;
     min-height: 164px;
     margin-right: 10px;
+    display: flex;
+    align-items: center;
 }
 
 .profession-auditory-list-item-img img{
@@ -269,8 +299,13 @@ universal list
     margin-bottom: 30px;
 }
 
-.universal-list-item-subtitle{
+.universal-list-item-title{
     font-size: 20px;
+    margin-top: 10px;
+}
+
+.universal-list-item-subtitle{
+    font-size: 16px;
     font-weight: 500;
     margin-bottom: 15px;
     margin-top: 20px;
@@ -381,6 +416,18 @@ universal list
 
 .work-expectations-list-item-visible-info{
 
+}
+
+.work-expectations-list-item-number{
+    background-color: black;
+    color: white;
+    padding: 9px 18px;
+    border-radius: 50px;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
 }
 
 .work-expectations-list-item-subtitle{
@@ -628,8 +675,7 @@ universal list
 }
 
 .teacher-photo img {
-    width: 370px;
-    height: 450px;
+    height: 384px;
 }
 
 .teacher-info{
@@ -675,14 +721,21 @@ universal list
     background-color: white;
     padding: 30px;
     width: 550px;
+    min-height: 500px;
     border-radius: 20px;
 }
 
 .price-info-header{
-    font-size: 52px;
-    font-weight: 600;
+
+    font-weight: 500;
     margin-bottom: 30px;
 }
+
+.price-info-header h2{
+    font-weight: 600;
+    font-size: 60px;
+}
+
 
 .price-info-wrapper{
     background-color: #f7f7f5;
@@ -714,9 +767,24 @@ universal list
 .price-consultation-info{
     padding: 30px;
     width: 550px;
+    min-height: 500px;
     background-color: white;
     border-radius: 20px;
 }
+
+.price-info-thank{
+    text-align: center;
+    justify-content: center;
+    display: none;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+}
+
+.price-info-error{
+    display: none;
+}
+
 
 .price-consultation-form{
 
@@ -744,17 +812,19 @@ universal list
     height: 56px;
     border-radius: 10px;
     z-index: 1;
+    padding-left: 14px;
 }
 
-input:focus+label
+input:focus+label,
+input:valid+label
 {
     border: 1px solid #e4e4e4;
     top: 7px;
     font-size: 10px;
     border: none;
     opacity: 0.9;
+    margin-bottom: 3px;
 }
-
 
 .form-field_label{
     position: absolute;
@@ -766,79 +836,36 @@ input:focus+label
 
 
 
-/*
-footer
-*/
 
-.bottom-section{
-    padding: 30px;
-    background-color: rgb(36,36,36);
-    width: 100%;
-    color: white;
+@media (max-width: 1200px){
+    .profession-container{
+        width: 1000px;
+    }
+
+
+    .about-profession-block{
+        width: 400px;
+        margin-right: 0px;
+    }
+
+
+    .about-profession-list{
+        display: block;
+    }
 }
 
-.bottom{
-    display: flex;
-    justify-content: space-between;
+@media (max-width: 1000px){
+    .profession-container{
+        width: 768px;
+    }
 }
 
-.bottom-top{
-
+@media (max-width: 768px){
+    .profession-container{
+        width: 480px;
+    }
 }
 
-.bottom-top-mainInfo{
+@media (max-width: 480px){
 
-}
-
-.bottom-contacts{
-
-}
-
-.bottom-contacts-phone{
-    font-size: 15px;
-    font-weight: 600;
-}
-
-.bottom-contacts-contactCenter {
-    font-size: 13px;
-    font-weight: 400;
-    margin-bottom: 15px;
-    opacity: .8;
-}
-
-.bottom-contacts-email{
-    font-size: 15px;
-    font-weight: 400;
-    margin-bottom: 20px;
-}
-
-.bottom-contacts-socials{
-
-}
-
-.bottom-info{
-}
-
-.bottom-info-topItem a{
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: 400;
-    margin-bottom: 20px;
-}
-
-.bottom-info-topItem a:hover{
-    color: white;
-    text-decoration: none;
-}
-
-.bottom-legal{
-    font-size: 15px;
-    font-weight: 400;
-}
-
-.bottom-legal-topItem{
-    font-size: 15px;
-    font-weight: 400;
-    opacity: .7;
 }

@@ -5,10 +5,10 @@ function myFunction() {
 
 function myCourseFunction(id) {
     $.ajax({
-        url: '/app/course?id='+id,
+        url: '/app/course-page?id='+id,
         method: "GET",
         success: function(data) {
-            $("#main-body-content").html(data);
+           /* $("#main-body-content").html(data);*/
         }
     })
     document.getElementById('main-body-content').classList.add("show");

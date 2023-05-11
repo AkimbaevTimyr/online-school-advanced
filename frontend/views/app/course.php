@@ -2,8 +2,8 @@
 use miloschuman\highcharts\Highmaps;
 use yii\bootstrap5\Tabs;
 use yii\helpers\Url;
-
 ?>
+
 
 <div class="d-flex flex-column h-100" >
     <div class="d-flex h-100">

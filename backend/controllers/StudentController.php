@@ -3,9 +3,11 @@
 namespace backend\controllers;
 
 use backend\models\Student;
+use common\models\Courses;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
+use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -41,7 +43,7 @@ class StudentController extends Controller
     public function actionIndex()
     {
         $query = (new Query())
-            ->select('user.id, user.username, user.name, user.last_name, user.email, user.phone_number, user.status, user.created_at, user.updated_at, auth_assignment.item_name')
+            ->select('user.id, user.username, user.name, user.last_name, user.email, user.phone_number, user.course, user.status, user.created_at, user.updated_at, auth_assignment.item_name')
             ->from('user')
             ->join('JOIN', 'auth_assignment', 'user.id = auth_assignment.user_id')
             ->where(['auth_assignment.item_name' => 'user']);
@@ -102,14 +104,23 @@ class StudentController extends Controller
      */
     public function actionUpdate($id)
     {
+        $course = Yii::$app->request->post('select-course');
+
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        $courses = Courses::find()->all();
+
+        $model->course = $course;
+
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'courses' => $courses,
+            'courseId' => $model->course
         ]);
     }
 

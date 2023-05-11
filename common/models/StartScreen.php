@@ -13,11 +13,12 @@ class StartScreen extends ActiveRecord
             [['description'], 'required'],
             [['img'], 'required'],
             [['course_time'], 'required'],
+            [['course_price'], 'required'],
             [['portfolio_projects'], 'required'],
             [['about_profession'], 'required'],
             [['skills'], 'required'],
             [['background_color'], 'required'],
-            [['course_id'], 'required']
+            [['course_id'], 'required'],
         ];
     }
 

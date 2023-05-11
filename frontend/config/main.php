@@ -23,6 +23,9 @@ return [
         'session' => [
             // this is the name of the session cookie used for login on the frontend
             'name' => 'advanced-frontend',
+            'class' => 'yii\web\Session',
+            'cookieParams' => ['lifetime' => 3600],
+            'timeout' => 900,
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -42,9 +45,11 @@ return [
             'rules' => [
                 'user/login' => "user/login",
                 'app/course-materials/<id:\d+>' => 'app/course-materials',
-                'course/<name:\w+>/<id:\d+>' => 'course/course',
                 '/' => 'course/main',
-                'courses' => 'course/courses'
+                'courses' => 'course/courses',
+                'app/course-page/<id:\d+>' => 'app/course-page',
+                'course/<name:[\w.-]+>/<id:\d+>' => 'course/course',
+                'course/<id:\d+>' => 'course/course'
             ],
         ],
     ],

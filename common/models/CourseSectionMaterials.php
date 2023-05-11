@@ -29,9 +29,10 @@ class CourseSectionMaterials extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['name', 'description'],  'required'],
             [['course_id', 'course_sections_id'], 'integer'],
-            [['name'], 'string', 'max' => 50],
-            [['description'], 'string', 'max' => 1000],
+            [['name'], 'string', 'max' => 50,],
+            [['description'], 'string', 'max' => 1000, ],
         ];
     }
 
@@ -42,10 +43,10 @@ class CourseSectionMaterials extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'name' => 'Название',
             'course_id' => 'Course ID',
             'course_sections_id' => 'Course Sections ID',
-            'description' => 'Description',
+            'description' => 'Описание',
         ];
     }
 

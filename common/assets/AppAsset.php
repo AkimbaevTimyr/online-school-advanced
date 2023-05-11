@@ -11,7 +11,11 @@ class AppAsset extends AssetBundle
         'app/style.css',
         'app/style.css',
         'app/bootstrap.css',
-        
+
+        'app/course/course.css',
+        'app/course/courses.css',
+        'app/course/main.css',
+
         'app/bootstrap.min.css',
         'app/animate.css',
         'app/animate.css',

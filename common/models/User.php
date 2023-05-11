@@ -223,4 +223,5 @@ class User extends ActiveRecord implements IdentityInterface
         $this->updated_at = date('d.m.Y', $this->updated_at);
     }
 
+
 }

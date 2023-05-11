@@ -9,7 +9,6 @@ use common\models\Events;
 use common\models\Files;
 use Yii;
 use yii\filters\AccessControl;
-use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\data\Pagination;
@@ -17,6 +16,7 @@ use yii\data\Pagination;
 
 class AppController extends Controller
 {
+    public $layout = 'app';
     public function behaviors()
     {
         return [
@@ -89,12 +89,7 @@ class AppController extends Controller
 
     public function actionMain()
     {
-        $model = new Courses();
-        $query = Courses::find()->all();
-
         return $this->render('main', [
-            'model' => $model,
-            'courses' => $query,
         ]);
     }
 
@@ -106,7 +101,6 @@ class AppController extends Controller
 
     public function actionCourse(int $id)
     {
-
         $courses = Courses::find()->all();
         $course_materials = CourseSections::find()->where(['course_id' => $id])->all();
         $course_materials_items = CourseSectionMaterials::find()->where(['course_id' => $id])->all();
@@ -157,15 +151,48 @@ class AppController extends Controller
 
     public function actionCourseMaterials($id)
     {
-        $courses = Courses::find()->all();
         $courseMaterial = CourseSectionMaterials::findOne($id);
         $courseMaterialFile = Files::find()->where(['course_sections_id' => $id])->all();
         $links = $courseMaterial->getLink($id);
         return $this->render('courseMaterials',[
             'courseMaterial' => $courseMaterial,
             'courseMaterialFile' => $courseMaterialFile,
-            'courses' => $courses,
             'links' => $links,
         ]);
     }
+
+    public function actionCoursePage($id)
+    {
+        $course_materials = CourseSections::find()->where(['course_id' => $id])->all();
+        $course_materials_items = CourseSectionMaterials::find()->where(['course_id' => $id])->all();
+        $course_files = Files::find()->all();
+        $sectionsCount = count($course_materials);
+        $sectionMaterialsCount = count($course_materials_items);
+
+        $events = Events::find()->where(['course_id'=> $id])->all();
+        $tasks = [];
+
+        foreach($events as $eve)
+        {
+            $event = new \yii2fullcalendar\models\Event();
+            $event->id = $eve->id;
+            $event->title = $eve->title;
+            $event->start = $eve->created_date;
+            $event->end = $eve->created_date_end;
+            $tasks[] = $event;
+        }
+
+        $item = Courses::findOne($id);
+
+        return $this->render("coursePage",[
+            'course' => $item,
+            'events' => $tasks,
+            'course_materials' => $course_materials,
+            'course_materials_items' => $course_materials_items,
+            'course_files' => $course_files,
+            'sectionsCount' => $sectionsCount,
+            'sectionMaterialsCount' => $sectionMaterialsCount
+        ]);
+    }
+
 }

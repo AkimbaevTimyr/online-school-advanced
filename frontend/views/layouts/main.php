@@ -31,7 +31,9 @@ FrontendAsset::register($this);
 
         <?= $content ?>
 
-        <?php $this->render("@webroot/helpers/renderFooter"); ?>
+        <footer id="footer" class="mt-auto">
+            <?php echo $this->render('/widgets/footer') ?>
+        </footer>
 
 <?php $this->endBody() ?>
 </body>

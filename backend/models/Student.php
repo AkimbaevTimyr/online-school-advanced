@@ -26,6 +26,11 @@ use Yii;
  */
 class Student extends \yii\db\ActiveRecord
 {
+
+    /**
+     * @var mixed|null
+     */
+
     /**
      * {@inheritdoc}
      */
@@ -40,7 +45,7 @@ class Student extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'name', 'last_name', 'auth_key', 'password_hash', 'email', 'phone_number', 'created_at', 'updated_at'], 'required'],
+            [['username', 'name', 'last_name', 'auth_key', 'password_hash', 'email', 'phone_number', 'course','created_at', 'updated_at'], 'required'],
             [['status', 'created_at', 'updated_at'], 'integer'],
             [['username', 'password_hash', 'password_reset_token', 'email', 'phone_number', 'verification_token'], 'string', 'max' => 255],
             [['name', 'last_name', 'auth_key'], 'string', 'max' => 32],
@@ -91,4 +96,5 @@ class Student extends \yii\db\ActiveRecord
     {
         return $this->hasMany(AuthItem::class, ['name' => 'item_name'])->viaTable('auth_assignment', ['user_id' => 'id']);
     }
+
 }

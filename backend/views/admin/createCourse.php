@@ -46,6 +46,24 @@ $this->params['breadcrumbs'][] = $this->title;
                                             </div>
                                         </div>
                                         <div class="mb-3 flex">
+                                            <label class="form-label">Цена курса</label>
+                                            <div class="d-block">
+                                                <input id="coursePrice" type="number" min="1" class="form-control" style="width: 500px" name="coursePrice" required>
+                                                <div class="invalid-feedback">
+                                                    Пожалуйста заполните название курса
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 flex">
+                                            <label class="form-label">Цвет</label>
+                                            <div class="d-block">
+                                                <input id="courseColor" type="color" min="1" class="form-control" style="width: 500px" name="courseColor" required>
+                                                <div class="invalid-feedback">
+                                                    Пожалуйста заполните название курса
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 flex">
                                             <label class="form-label">Описание курса</label>
                                             <div class="d-block">
                                                 <input id="courseDescription" type="text" min="1" class="form-control" style="width: 500px" name="courseDescription" required>
@@ -187,10 +205,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         <input id="courseMaterials-1" name="description[]" type="text" class="form-control" style="width: 500px" required >
                     </div>
                 </div>
-<!--                <div class="mb-3 flex">-->
-<!--                    <label class="form-label" >Прикрепить файл</label>-->
-<!--                    <input class="form-control" name="file[]" type="file" id="formFile" style="width: 500px" required>-->
-<!--                </div>-->
+<!--            <div class="mb-3 flex">-->
+<!--                <label class="form-label" >Прикрепить файл</label>-->
+<!--                <input class="form-control" name="file[]" type="file" id="formFile" style="width: 500px" required>-->
+<!--            </div>-->
             </div>
             <button onclick="onSectionClick()" type="button" class="btn border" style="min-width: 100px">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
@@ -240,11 +258,11 @@ $this->params['breadcrumbs'][] = $this->title;
         $(section.childNodes[5]).append(`
             <div style="border-top: 1px solid #d3d3d3" >
                 <div class="mb-3 flex" id="materials-block" style="margin-top: 10px">
-                            <label class="form-label">Тема</label>
-                            <div class="flex">
-                                <input id="courseMaterials" type="text" class="form-control" style="width: 450px" name="courseMaterials[]" required>
-                                <button onclick="onMaterialsDelete(this)" type="button" id="add-material" class="btn btn-danger" style="width: 40px; height: 38px; margin-left: 10px">-</button>
-                            </div>
+                    <label class="form-label">Тема</label>
+                    <div class="flex">
+                        <input id="courseMaterials" type="text" class="form-control" style="width: 450px" name="courseMaterials[]" required>
+                        <button onclick="onMaterialsDelete(this)" type="button" id="add-material" class="btn btn-danger" style="width: 40px; height: 38px; margin-left: 10px">-</button>
+                    </div>
                 </div>
                 <div class="mb-3 flex">
                     <label class="form-label">Описание</label>
@@ -289,7 +307,6 @@ $this->params['breadcrumbs'][] = $this->title;
             for(let form of forms){
                 items.push(form)
             }
-
             //получаем введенные данные из полей тема
             for(let item of items){
                 let a =[]
@@ -316,6 +333,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
             c = $('#courseName').val();
 
+            let courseColor = $("#courseColor").val();
+            let coursePrice = $("#coursePrice").val();
+
             let courseTime = $('#courseTime').val();
             let courseDescription = $('#courseDescription').val();
             let professionDescription = $('#professionDescription').val();
@@ -326,8 +346,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 course_description : courseDescription,
                 about_profession : professionDescription,
             }
-
-
 
             let courseSectionsId;
 
@@ -377,6 +395,8 @@ $this->params['breadcrumbs'][] = $this->title;
             formData.append('arr', JSON.stringify(lastArr));
             formData.append('courseInformation', JSON.stringify(courseInformation));
             formData.append('courseImg', courseImg);
+            formData.append('courseColor', JSON.stringify(courseColor));
+            formData.append('coursePrice', JSON.stringify(coursePrice));
 
             $.ajax({
                 url: `/admin/create`,
@@ -384,7 +404,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 data: formData,
                 contentType: false,
                 processData: false,
-                dataType: 'json',
+                dataType: 'text',
                 success: function (data) {
                     const block = document.getElementById('alert-danger');
                     block.style.display = 'block';
@@ -409,6 +429,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             })
             for(let i = 2; i <= id; i++){
+                let ckeditor = document.querySelector('input[name="professionDescription"]');
+                ckeditor.value = "";
                 const parent = document.getElementById('ibox-content');
                 let child = document.getElementById(`ibox-section-${i}`);
                 if(child){
@@ -419,9 +441,5 @@ $this->params['breadcrumbs'][] = $this->title;
     }
 </script>
 
-
-
-<!--Создаем раздел  и она сразу пушится в бд-->
-<!--создаем лекцию и она сразу пушится в бд-->
 
 

@@ -32,6 +32,17 @@
 
                                     <?= $form->field($model, 'phone_number') ?>
 
+                                    <!-- курсы-->
+                                    <label>Название курса</label>
+
+                                    <?php  $options = ArrayHelper::map($courses, 'id', 'name'); ?>
+
+                                    <?= Html::dropDownList('select-course',null, $options, ['class' => 'form-control']); ?>
+
+                                    <br>
+
+                                    <!-- роли -->
+                                    <label>Роль пользователя</label>
                                     <?php  $options = ArrayHelper::map($roles, 'parent', 'parent')  ?>
 
                                     <?= Html::dropDownList('select-name', null, $options, ['class' => 'form-control']); ?>
@@ -40,6 +51,7 @@
                                     <div class="form-group ">
                                         <?= Html::submitButton('Зарегистрировать', ['class' => 'btn btn-primary w-auto', 'name' => 'signup-button']) ?>
                                     </div>
+
                                 <?php ActiveForm::end(); ?>
                             </div>
                         </div>

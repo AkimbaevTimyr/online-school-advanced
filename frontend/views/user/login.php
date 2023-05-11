@@ -41,7 +41,7 @@ use yii\bootstrap5\Button;
                     ]);
                     ?>
                     <?php
-                    ActiveForm::end();
+                        ActiveForm::end();
                     ?>
                 </div>
             </div>

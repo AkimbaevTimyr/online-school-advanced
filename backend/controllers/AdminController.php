@@ -11,6 +11,7 @@ use common\models\Events;
 use common\models\Files;
 use common\models\MaterialsLinks;
 use common\models\SignupForm;
+use common\models\Skills;
 use common\models\StartScreen;
 use common\models\User;
 use DateTime;
@@ -133,27 +134,37 @@ class AdminController extends Controller
             $course = Json::decode(Yii::$app->request->post('course'));
             $arr = Json::decode(Yii::$app->request->post('arr'));
             $courseInformation = Json::decode(Yii::$app->request->post('courseInformation'));
+            $courseColor = Json::decode(Yii::$app->request->post('courseColor'));
+            $coursePrice = Json::decode(Yii::$app->request->post('coursePrice'));
 
+            //название курса
             $courseModel->id = $course['id'];
             $courseModel->name = $course['name'];
             $courseModel->save();
 
+
+            //информация о курсе
             $courseInfo = new StartScreen();
             $courseInfo->title = $course['name'];
             $courseInfo->course_id = $course['id'];
             $courseInfo->course_time =  $courseInformation['course_time'];
+            $courseInfo->course_price = $coursePrice;
             $courseInfo->description = $courseInformation['course_description'];
             $courseInfo->about_profession = $courseInformation['about_profession'];
             $courseInfo->portfolio_projects = 2;
             $courseInfo->img = $_FILES["courseImg"]["name"];
+            $courseInfo->background_color = $courseColor;
             $courseInfo->save(false);
 
+
+            //добавлени картинки курса
             if($_FILES){
                 $tmp_name = $_FILES["courseImg"]["tmp_name"];
                 move_uploaded_file($tmp_name, Yii::getAlias('@frontend/web/uploads/').$_FILES['courseImg']['name']);
                 echo "Файлы загружены";
             }
 
+            //добавление секций курса
             foreach($arr as $a){
                 $model = new CourseSections();
                 $model->name = $a[0]['name'];
@@ -162,6 +173,7 @@ class AdminController extends Controller
                 $model->save();
             }
 
+            //добавление материалов секции
             $course_materials_ids = [];
             foreach($arr as $a){
                 for ($i = 1; $i <= count($a)-2; $i++) {
@@ -179,7 +191,6 @@ class AdminController extends Controller
             if($_FILES)
             {
                 foreach ($_FILES["file"]["error"] as $key => $error) {
-
                     $types = array(
                         'text/plain' => '.txt',
                         'application/pdf' => '.pdf',
@@ -216,6 +227,8 @@ class AdminController extends Controller
         $sectionModel = new CourseSections();
         $sectionsMaterialsModel = new CourseSectionMaterials();
 
+        $skills = new Skills();
+
         $course = Courses::findOne($id);
         $sections = CourseSections::find()->where(['course_id' => $id])->all();
         $sectionsMaterials = CourseSectionMaterials::find()->where(['course_id' => $id])->all();
@@ -245,9 +258,10 @@ class AdminController extends Controller
             'course_materials_items' => $sectionsMaterials,
 
             'events' => $tasks,
+
+            'skills' => $skills
         ]);
     }
-
 
     public function actionEvent($date, $courseId)
     {
@@ -264,7 +278,7 @@ class AdminController extends Controller
         }
     }
 
-    // рендерит страницу с кнопка редактирования и удаления события
+    // рендерит страницу с кнопкой редактирования и удаления события
     public function actionView($id)
     {
         $model = Events::findOne($id);
@@ -284,6 +298,7 @@ class AdminController extends Controller
 
     public function actionEventUpdate($id = null)
     {
+        /*id , начало ивента , конец ивента при перетаскивании события на другую дату в календаре*/
         $eventId = Yii::$app->request->post('eventId');
         $start = Yii::$app->request->post('start');
         $end = Yii::$app->request->post('end');
@@ -319,6 +334,13 @@ class AdminController extends Controller
         $transaction = $connection->beginTransaction();
 
         try{
+            $files = Files::find()->where(['course_id' => $id])->all();
+
+            //удаление файлов
+            foreach ($files as $file){
+                unlink(Yii::getAlias("@frontend/web/uploads/").$file->file);
+            }
+
             $connection->createCommand()->delete('course_files', ['course_id' => $id])->execute();
 
             $connection->createCommand()->delete('course_sections_materials', ['course_id' => $id])->execute();
@@ -326,6 +348,10 @@ class AdminController extends Controller
             $connection->createCommand()->delete('course_sections', ['course_id' => $id])->execute();
 
             $connection->createCommand()->delete('courses', ['id' => $id])->execute();
+
+            $connection->createCommand()->delete('events', ['course_id' => $id])->execute();
+
+            $connection->createCommand()->delete('course_information', ['course_id' => $id])->execute();
 
             $transaction->commit();
 
@@ -345,6 +371,11 @@ class AdminController extends Controller
         $courseMaterial = CourseSectionMaterials::findOne($id);
         $courseMaterialFile = Files::find()->where(['course_sections_id' => $id])->all();
 
+        if ($courseMaterial->load(Yii::$app->request->post()) && $courseMaterial->save()) {
+            Yii::$app->session->setFlash('success', 'Данные обновлены');
+            return $this->redirect("/admin/course-materials/{$id}");
+        }
+
         return $this->render('courseMaterials',[
             'courseMaterial' => $courseMaterial,
             'courseMaterialFile' => $courseMaterialFile,
@@ -356,38 +387,60 @@ class AdminController extends Controller
     //добавить id для редиректа при добавлении ссылки у материала курса
     public function actionUpdateLink($link, $id)
     {
-        $materialsLink = new MaterialsLinks();
-        $materialsLink->link = $link;
+        try{
+            $materialsLink = new MaterialsLinks();
+            $materialsLink->link = $link;
 
-        $materialsLink->course_materials_id = $id;
-        $materialsLink->save();
-        return $this->redirect("/admin/course-materials/{$id}");
+            $materialsLink->course_materials_id = $id;
+            $materialsLink->save();
+            Yii::$app->session->setFlash('success', 'Ссылка успешно добавлена');
+            return $this->redirect("/admin/course-materials/{$id}");
+        }catch (\Exception $e){
+            Yii::$app->session->setFlash('error', 'Не удалось добавить ссылку');
+            return $this->redirect(["/admin/course-materials/{$id}"]);
+        }
+    }
+
+    public function actionUploadFile($id){
+        try{
+            if($_FILES){
+                $fileName = str_replace(' ', '', $_FILES['file']['name']);
+                $tmp_name = $_FILES["file"]["tmp_name"];
+                move_uploaded_file($tmp_name, Yii::getAlias('@frontend/web/uploads/').$fileName);
+
+                $modelFile = new Files();
+                $modelFile->file = $fileName;
+                $modelFile->course_sections_id = $id;
+                $modelFile->save();
+
+                Yii::$app->session->setFlash('success', 'Файл успешно загружен');
+                return $this->redirect("/admin/course-materials/{$id}");
+            }
+        }catch (\Exception $e){
+            Yii::$app->session->setFlash('error', 'Не удалось загрузить файл');
+            return $this->redirect(["/admin/course-materials/{$id}"]);
+        }
     }
 
 
-    public function actionUploadFile($id){
+    function actionUploadSkills()
+    {
+        $model = new Skills();
 
-        if($_FILES){
-            $fileName = str_replace(' ', '', $_FILES['file']['name']);
-            $tmp_name = $_FILES["file"]["tmp_name"];
-            move_uploaded_file($tmp_name, Yii::getAlias('@frontend/web/uploads/').$fileName);
+        $model->course_id = $_POST['course_id'];
+        $model->title = $_POST['title'];
+        $model->subtitle = $_POST['desc'];
 
-            $modelFile = new Files();
-            $modelFile->file = $fileName;
-            $modelFile->course_sections_id = $id;
-            $modelFile->save();
-            echo "Файлы загружены";
-
-            return $this->redirect("/admin/course-materials/{$id}");
-        }
+        $model->save(false);
     }
 
     public function actionSignup()
     {
         $userRole = Yii::$app->request->post('select-name');
+        $courseName = Yii::$app->request->post('select-course');
 
         $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post()) && $model->signup($userRole)) {
+        if ($model->load(Yii::$app->request->post()) && $model->signup($userRole, $courseName)) {
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
         }
         return $this->redirect('/admin/create-user');

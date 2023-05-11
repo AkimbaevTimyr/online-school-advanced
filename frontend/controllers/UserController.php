@@ -21,6 +21,9 @@ use frontend\models\ContactForm;
  */
 class UserController extends Controller
 {
+
+    public $layout = 'app';
+
     /**
      * {@inheritdoc}
      */

@@ -13,7 +13,9 @@ class FrontendAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
+        'css/map.css',
         'css/course/course.css',
+        'css/course/footer.css',
         'css/course/courses.css',
         'css/course/main.css'
     ];

@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Courses;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -10,6 +11,15 @@ $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Список Студентов', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+
+$courseName = '';
+if ($model->course) {
+    $course = Courses::findOne($model->course);
+    if ($course) {
+        $courseName = $course->name;
+    }
+}
+
 ?>
 <div class="student-view w-75">
 
@@ -29,7 +39,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'username',
             'name',
             'last_name',
@@ -38,6 +47,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'password_reset_token',*/
             'email:email',
             'phone_number',
+            [
+                'attribute' => 'course',
+                'value' => $courseName,
+            ],
             'status',
             /*'created_at',
             'updated_at',*/
