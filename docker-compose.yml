@@ -48,15 +48,4 @@ services:
       - mysql
 
 
-  migrate:
-    build:
-      context: .
-      dockerfile: docker/web/Dockerfile
-    depends_on:
-      - db
-    environment:
-      # Настройки PHP
-      PHP_DISPLAY_ERRORS: 1
-      PHP_ERROR_REPORTING: E_ALL
-      PHP_MAX_EXECUTION_TIME: 300
-    command: php yii migrate/up --interactive=0
+  
